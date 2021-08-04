@@ -35,13 +35,14 @@ for i in range(len(feedlist)):
 
 
 layout = [
-    [sg.Column([[sg.Text(f"{titles[i]}", font=("Courier New", -20))] for i in range(len(titles))],
-                scrollable=True)]
+    [sg.Column([[sg.Button(button_text = f"{titles[i]}", font=("Courier New", -20))] for i in range(len(titles))],
+                scrollable=True, vertical_scroll_only=True )]
 ]
 
 
 
 window = sg.Window("pySimpleRSS", layout, margins=(0, 0))
+
 
 while True:
     event, values = window.Read()
