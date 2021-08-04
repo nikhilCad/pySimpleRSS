@@ -40,12 +40,26 @@ layout = [
 ]
 
 
+window = sg.Window("pySimpleRSS", layout, margins=(0, 0), resizable=True)
 
-window = sg.Window("pySimpleRSS", layout, margins=(0, 0))
+def openWindow(title):
+    layout2 = [
+        [sg.Column([[sg.Button(button_text = "Hello", font=("Courier New", -20))] ],
+                scrollable=True, vertical_scroll_only=True )]
+        ]
+    window2 = sg.Window("pySimpleRSS", layout2, margins=(0, 0), resizable=True)
 
+    while True:
+        event, values = window2.Read()
+        if event is None or event == 'Exit':
+            break
+        window2.Close()
 
 while True:
     event, values = window.Read()
     if event is None or event == 'Exit':
         break
+    if event in titles:
+        openWindow(event)
+
 window.Close()
