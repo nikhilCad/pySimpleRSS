@@ -61,7 +61,7 @@ def openWindow(title):
 
     layout2 = [
         [sg.Column([[sg.Button(button_text = boxText , font=("Courier New", -20),
-         size =(charsEach,len(boxText)//charsEach))] ],
+         size =( charsEach, int(len(boxText)/charsEach) ))] ],
                 scrollable=True, vertical_scroll_only=True )]
         ]
         #size has width in chars first, height in rows later
