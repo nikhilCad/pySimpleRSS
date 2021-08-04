@@ -16,10 +16,11 @@ links = []
 labelList = []
 
 
-def linkPress(link,title):#keep button functions above button call
+def linkPress(link):#keep button functions above button call
     curArticle = Article (link, language="en")
     curArticle.download()
     curArticle.parse()
+    return curArticle.text
     #pageLabel.config(text = title + "\n\n" +
     #                 curArticle.text
      #                + curArticle.summary)#Change this later to parsed text
@@ -43,11 +44,28 @@ layout = [
 window = sg.Window("pySimpleRSS", layout, margins=(0, 0), resizable=True)
 
 def openWindow(title):
+
+    link = ""
+
+    for i in range(len(titles)):
+        if titles[i] == title:
+            link = links[i]
+    
+    print(link)
+
+    boxText = linkPress(link)
+
+    print(boxText)
+
+    charsEach = 80 #chars in each line
+
     layout2 = [
-        [sg.Column([[sg.Button(button_text = "Hello", font=("Courier New", -20))] ],
+        [sg.Column([[sg.Button(button_text = boxText , font=("Courier New", -20),
+         size =(charsEach,len(boxText)//charsEach))] ],
                 scrollable=True, vertical_scroll_only=True )]
         ]
-    window2 = sg.Window("pySimpleRSS", layout2, margins=(0, 0), resizable=True)
+        #size has width in chars first, height in rows later
+    window2 = sg.Window(title, layout2, margins=(0, 0), resizable=True)
 
     while True:
         event, values = window2.Read()
