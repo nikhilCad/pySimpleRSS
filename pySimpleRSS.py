@@ -36,7 +36,12 @@ for i in range(len(feedlist)):
         links.append( tempfeed.entries[j].link ) 
 
 
+sg.theme('DarkAmber')
+
 layout = [
+
+    [sg.Button("ADD FEED")],
+
     [sg.Column([[sg.Button(button_text = f"{titles[i]}", font=("Courier New", -20))] for i in range(len(titles))],
                 scrollable=True, vertical_scroll_only=True )]
 ]
@@ -52,11 +57,9 @@ def openWindow(title):
         if titles[i] == title:
             link = links[i]
     
-    print(link)
 
     boxText = linkPress(link)
 
-    print(boxText)
 
     charsEach = 120 #chars in each line
 
