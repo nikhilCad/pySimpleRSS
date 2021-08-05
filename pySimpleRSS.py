@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from PySimpleGUI.PySimpleGUI import Multiline
 import feedparser
 from newspaper import Article
 
@@ -57,12 +58,19 @@ def openWindow(title):
 
     print(boxText)
 
-    charsEach = 80 #chars in each line
+    charsEach = 120 #chars in each line
 
     layout2 = [
-        [sg.Column([[sg.Button(button_text = boxText , font=("Courier New", -20),
-         size =( charsEach, int(len(boxText)/charsEach) ))] ],
-                scrollable=True, vertical_scroll_only=True )]
+
+
+         [sg.Column([[sg.Text(text = boxText , font=("Courier New", -20),
+          size =( charsEach, None ))] ],
+                 scrollable=True, vertical_scroll_only=True )]
+        #Column is used JUST to get the scrollbar and nothing else
+
+         #[sg.Text(boxText, size =(charsEach, None))]
+         #This works but no scrollbar
+
         ]
         #size has width in chars first, height in rows later
     window2 = sg.Window(title, layout2, margins=(0, 0), resizable=True)
