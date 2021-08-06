@@ -26,21 +26,25 @@ def linkPress(link):#keep button functions above button call
     #                 curArticle.text
      #                + curArticle.summary)#Change this later to parsed text
 
-for i in range(len(feedlist)):
-    
-    tempfeed = feedparser.parse(feedlist[i])
+def updateFeed():
+    for i in range(len(feedlist)):
+        
+        tempfeed = feedparser.parse(feedlist[i])
 
-    for j in range(len(tempfeed.entries)):
+        for j in range(len(tempfeed.entries)):
 
-        titles.append( tempfeed.entries[j].title )
-        links.append( tempfeed.entries[j].link ) 
+            if tempfeed.entries[j].title not in titles:
 
+                titles.append( tempfeed.entries[j].title )
+                links.append( tempfeed.entries[j].link ) 
+
+updateFeed()
 
 sg.theme('DarkAmber')
 
 layout = [
 
-    [sg.Button("ADD FEED")],
+    [sg.Button("ADD FEED", size=(15, 1)), sg.InputText()],
 
     [sg.Column([[sg.Button(button_text = f"{titles[i]}", font=("Courier New", -20))] for i in range(len(titles))],
                 scrollable=True, vertical_scroll_only=True )]
@@ -88,7 +92,11 @@ while True:
     event, values = window.Read()
     if event is None or event == 'Exit':
         break
+
     if event in titles:
         openWindow(event)
+    
+    if values[0] != None:#Add feed button
+        print(values[0])
 
 window.Close()
