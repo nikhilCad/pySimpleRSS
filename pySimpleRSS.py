@@ -56,14 +56,14 @@ boxText = ""
 
 layout2 = [
 
-
+        [sg.Button('Back')],
          [sg.Column([  [sg.Text(  boxText , font=("Courier New", -20),
                          size =( charsEach, 500 ), key="fullText"  )]
                         ],
-                 scrollable=True, vertical_scroll_only=True)],
+                 scrollable=True, vertical_scroll_only=True)]
 
 
-                 [sg.Button('Back')]
+                 
         #Column is used JUST to get the scrollbar and nothing else
 
          #[sg.Text(boxText, size =(charsEach, None))]
