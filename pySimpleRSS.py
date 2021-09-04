@@ -58,7 +58,7 @@ layout2 = [
 
 
          [sg.Column([  [sg.Text(  boxText , font=("Courier New", -20),
-                         size =( charsEach, None ), key="fullText"  )]
+                         size =( charsEach, 500 ), key="fullText"  )]
                         ],
                  scrollable=True, vertical_scroll_only=True)],
 
@@ -95,7 +95,6 @@ while True:
 
         print(boxText)
 
-        #THIS LINE IS BUGGYYYYYYYYYYYYYYYYYYY
         window["fullText"].update(boxText)
 
         window["-COL2-"].update(visible=True)
