@@ -52,14 +52,17 @@ layout1 = [
 
 charsEach = 120 #chars in each line in article full text view
 
-boxText = "lolxd"
+boxText = ""
 
 layout2 = [
 
 
-         [sg.Column([  [sg.Text(text = boxText , font=("Courier New", -20),
-          size =( charsEach, None ))]   ],
-                 scrollable=True, vertical_scroll_only=True, key="fullText" )],
+         [sg.Column([  [sg.Text(  boxText , font=("Courier New", -20),
+                         size =( charsEach, None ), key="fullText"  )]
+                        ],
+                 scrollable=True, vertical_scroll_only=True)],
+
+
                  [sg.Button('Back')]
         #Column is used JUST to get the scrollbar and nothing else
 
@@ -93,7 +96,7 @@ while True:
         print(boxText)
 
         #THIS LINE IS BUGGYYYYYYYYYYYYYYYYYYY
-        window["fullText"] = boxText
+        window["fullText"].update(boxText)
 
         window["-COL2-"].update(visible=True)
         
