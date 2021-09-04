@@ -42,7 +42,7 @@ updateFeed()
 
 sg.theme('DarkAmber')
 
-layout = [
+layout1 = [
 
     [sg.Button("ADD FEED", size=(15, 1)), sg.InputText()],
 
@@ -50,43 +50,28 @@ layout = [
                 scrollable=True, vertical_scroll_only=True )]
 ]
 
+charsEach = 120 #chars in each line in article full text view
 
-window = sg.Window("pySimpleRSS", layout, margins=(0, 0), resizable=True)
+boxText = "lolxd"
 
-def openWindow(title):
-
-    link = ""
-
-    for i in range(len(titles)):
-        if titles[i] == title:
-            link = links[i]
-    
-
-    boxText = linkPress(link)
+layout2 = [
 
 
-    charsEach = 120 #chars in each line
-
-    layout2 = [
-
-
-         [sg.Column([[sg.Text(text = boxText , font=("Courier New", -20),
-          size =( charsEach, None ))] ],
-                 scrollable=True, vertical_scroll_only=True )]
+         [sg.Column([  [sg.Text(text = boxText , font=("Courier New", -20),
+          size =( charsEach, None ))]   ],
+                 scrollable=True, vertical_scroll_only=True, key="fullText" )],
+                 [sg.Button('Back')]
         #Column is used JUST to get the scrollbar and nothing else
 
          #[sg.Text(boxText, size =(charsEach, None))]
          #This works but no scrollbar
 
         ]
-        #size has width in chars first, height in rows later
-    window2 = sg.Window(title, layout2, margins=(0, 0), resizable=True)
 
-    while True:
-        event, values = window2.Read()
-        if event is None or event == 'Exit':
-            break
-        window2.Close()
+layout = [[sg.Column(layout1, key='-COL1-'), sg.Column(layout2, visible=False, key='-COL2-')]]
+
+
+window = sg.Window("pySimpleRSS", layout, margins=(0, 0), resizable=True)
 
 while True:
     event, values = window.Read()
@@ -94,7 +79,28 @@ while True:
         break
 
     if event in titles:
-        openWindow(event)
+        window["-COL1-"].update(visible=False)
+
+        link = ""
+
+        for i in range(len(titles)):
+            if titles[i] == event:
+                link = links[i]
+        
+
+        boxText = linkPress(link)
+
+        print(boxText)
+
+        #THIS LINE IS BUGGYYYYYYYYYYYYYYYYYYY
+        window["fullText"] = boxText
+
+        window["-COL2-"].update(visible=True)
+        
+    
+    if event == "Back":
+        window["-COL2-"].update(visible=False)
+        window["-COL1-"].update(visible=True)
     
     if values[0] != None:#Add feed button
         print(values[0])
