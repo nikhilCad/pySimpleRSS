@@ -2,14 +2,17 @@ import PySimpleGUI as sg
 from PySimpleGUI.PySimpleGUI import Multiline
 import feedparser
 from newspaper import Article
+import os
+import sys
 
-feedlist = [
-##    "https://www.thenewsminute.com/kerala.xml",
-##    "https://www.thenewsminute.com/tamil.xml",
-##    "https://www.thehindu.com/news/national/kerala/feeder/default.rss",
-##    "https://www.thehindu.com/news/national/tamil-nadu/feeder/default.rss"
-    "http://rss.cnn.com/rss/edition.rss"
-    ]
+feedlist = []
+
+txtfile = open("feeds.txt", "r")
+temp = txtfile.readlines()[0]
+for i in temp.split(" "):
+    feedlist.append(i)
+txtfile.close()
+
 
 titles = []
 links = []
@@ -44,7 +47,7 @@ sg.theme('DarkAmber')
 
 layout1 = [
 
-    [sg.Button("ADD FEED", size=(15, 1)), sg.InputText()],
+    [sg.Button("ADD FEED", size=(15, 1)), sg.Input(key='_IN_')],
 
     [sg.Column([[sg.Button(button_text = f"{titles[i]}", font=("Courier New", -20))] for i in range(len(titles))],
                 scrollable=True, vertical_scroll_only=True )]
@@ -93,8 +96,6 @@ while True:
 
         boxText = linkPress(link)
 
-        print(boxText)
-
         window["fullText"].update(boxText)
 
         window["-COL2-"].update(visible=True)
@@ -104,7 +105,18 @@ while True:
         window["-COL2-"].update(visible=False)
         window["-COL1-"].update(visible=True)
     
-    if values[0] != None:#Add feed button
-        print(values[0])
+    if event == "ADD FEED":#Add feed button
+        print(values["_IN_"])
+        
+        feedlist.append(values["_IN_"])
+        
+        #RESTART APP
+        
+        txtfile = open("feeds.txt","a")
+        txtfile.write(" "+values["_IN_"])
+        txtfile.close()
+        
+        sg.Popup('Please restart the apllication for new feeds', title='Alert')
+        
 
 window.Close()
